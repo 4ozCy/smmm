@@ -43,17 +43,25 @@
         </div>
     </div>
     <script>
-        async function fetchServices() {
-            const response = await fetch('/services');
-            const services = await response.json();
-            const serviceDropdown = document.getElementById('service');
-            services.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service.service;
-                option.textContent = `${service.name} (${service.rate} per 1K)`;
-                serviceDropdown.appendChild(option);
-            });
-        }
+        // Fetch services from the backend
+async function fetchServices() {
+    try {
+        const response = await fetch('/services');
+        const services = await response.json();
+
+        const serviceSelect = document.getElementById('service');
+        services.forEach(service => {
+            const option = document.createElement('option');
+            option.value = service.service; // Service ID
+            option.textContent = `${service.name} (ID: ${service.identifier})`; // Service name with identifier
+            serviceSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error fetching services:', error);
+    }
+}
+
+fetchServices();
 
         document.getElementById('order-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -95,7 +103,6 @@
             `).join('');
         }
 
-        fetchServices();
         fetchOrders();
     </script>
 </body>
