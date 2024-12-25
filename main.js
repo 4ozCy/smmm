@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Serve the HTML file
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Public')));
 
 app.get('/services', async (req, res) => {
     try {
