@@ -1,0 +1,26 @@
+{
+  "name": "smm-panel",
+  "version": "1.0.0",
+  "description": "A free SMM panel for instant TikTok views and likes delivery.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "path": "^0.12.7"
+  },
+  "keywords": [
+    "smm",
+    "panel",
+    "tiktok",
+    "api",
+    "views",
+    "likes"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
