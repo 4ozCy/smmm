@@ -20,15 +20,26 @@ app.use(express.static(path.join(__dirname, 'Public')));
 app.get('/services', async (req, res) => {
     try {
         const response = await axios.get(`${BASE_URL}/services`, { params: { key: API_KEY } });
+
         // Log the response data for debugging purposes
         console.log(response.data);
 
-        // Filter services by name containing 'view' or 'like' and related to TikTok
-        const tiktokServices = response.data.filter(service =>
-            (service.name.toLowerCase().includes('view') || service.name.toLowerCase().includes('like'))
+        // Add identifiers for Like and View services
+        const tiktokServices = response.data.map(service => {
+            if (service.name.toLowerCase().includes('like')) {
+                return { ...service, identifier: 1 }; // Assign 1 for Like
+            } else if (service.name.toLowerCase().includes('view')) {
+                return { ...service, identifier: 2 }; // Assign 2 for View
+            }
+            return service; // Keep other services unchanged
+        });
+
+        // Filter services to only include likes and views
+        const filteredServices = tiktokServices.filter(service =>
+            service.identifier === 1 || service.identifier === 2
         );
 
-        res.json(tiktokServices);
+        res.json(filteredServices);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to fetch services.' });
